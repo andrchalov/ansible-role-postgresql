@@ -53,6 +53,7 @@
   when: postgresql_slave and not pgdata_dir_version.stat.exists
   become: true
   become_user: "{{ postgresql_user }}"
+  notify: restart postgresql
 
 - name: Ensure standby.signal file exists on slave.
   copy:
