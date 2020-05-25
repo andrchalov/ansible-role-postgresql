@@ -3,6 +3,7 @@
   template:
     src: scripts/repslots.sql
     dest: "{{ postgresql_config_path }}/repslots.sql"
+  when: not postgresql_slave
 
 - name: Configure database replication slots
   command:
@@ -12,3 +13,4 @@
   become_user: "{{ postgresql_user }}"
   register: __postgresql_repslots
   changed_when: (__postgresql_repslots.stdout | regex_search('(Droped|Added)'))
+  when: not postgresql_slave
