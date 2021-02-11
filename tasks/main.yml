@@ -1,6 +1,10 @@
 ---
-- fail: msg="Only Ubuntu 18.04 supported"
-  when: not (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04')
+- name: Check Ubuntu version
+  fail:
+    msg: '{{ ansible_distribution_version }} is not an acceptable version of Ubuntu for this role'
+  when:
+    - not ansible_distribution_version is version_compare(18.04, '=')
+    - not ansible_distribution_version is version_compare(20.04, '=')
 
 - include_tasks: setup.yml
 
